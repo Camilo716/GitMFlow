@@ -6,7 +6,7 @@ Script para automatizar el proceso de migración de ramas en un repositorio Git.
 
 ## El flujo que pretende automatizar es el siguiente
 
-1. Identificar todos los commits que han sido guardados desde que se creó la rama con nuestros cambios, es decir, desde el commit que apunta hacia origin/RAMA_PRINCIPAL (Sin incluirlo) hasta el que apunta hasta RAMA_ACTUAL(Incluyendolo). (Sin incluir commits de merge).
+1. Identificar todos los commits que han sido guardados desde que se creó la rama con nuestros cambios, es decir, desde el commit que apunta hacia origin/RAMA_PRINCIPAL (Sin incluirlo) hasta el que apunta hacia RAMA_ACTUAL(Incluyendolo). (Sin incluir commits de merge).
 
 2. Eliminar localmente RAMA_DESARROLLO, traerla actualizada desde origin RAMA_DESARROLLO (Esto con el fin de no incluir cambios que aún no están aprobados en RAMA_PRINCIPAL) y posicionarse en ella.
 
