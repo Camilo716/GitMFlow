@@ -1,34 +1,44 @@
-source config_file
+source ./config_file.sh
 
-commit_hashes=($(git rev-list --ancestry-path origin/$RAMA_PRINCIPAL..$RAMA_ACTUAL))
+cd $PROJECT_PATH
+
+commit_hashes=$(git rev-list --no-merges origin/$RAMA_PRINCIPAL..origin/$RAMA_ACTUAL | tac)
 
 trap 'handle_error' ERR
 
 function handle_error() {
-    echo "Error encontrado. Revertir cambios..."
+    echo "Error encontrado. Revertiendo cambios..."
+    echo "_________________________________________"
     git checkout $RAMA_ACTUAL
-    git branch -D $name_changes_branch
-    git push origin --delete $name_changes_branch
+    git cherry-pick --abort
+    git reset --hard
+    git branch -D $RAMA_CAMBIOS
+    git push origin --delete $RAMA_CAMBIOS
+    echo "_________________________________________"
+    echo "Cambios revertidos"
     exit 1
 }
-
+git checkout $RAMA_ACTUAL
 git pull origin $RAMA_ACTUAL
 
-git branch -D $RAMA_DESARROLLO
+if git show-ref --verify --quiet "refs/heads/$RAMA_DESARROLLO"; then
+    git branch -D $RAMA_DESARROLLO
+fi
 
-git pull origin $RAMA_DESARROLLO
+git pull
 
+echo $"Posicionandose en rama $RAMA_DESARROLLO" 
 git checkout $RAMA_DESARROLLO
 
-name_changes_branch=$(echo $RAMA_ACTUAL | sed "s/\//$RAMA_DESARROLLO/")
 
-git checkout -b $name_changes_branch
+git checkout -b $RAMA_CAMBIOS
 
 for commit_hash in "${commit_hashes[@]}"; do
+    echo $"Haciendo cherry-pick a\n: $commit_hash"  
     git cherry-pick $commit_hash
 done
 
-git push --set-upstream origin $name_changes_branch
+git push --set-upstream origin $RAMA_CAMBIOS
 
 trap - ERR
 
