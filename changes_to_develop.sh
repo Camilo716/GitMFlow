@@ -7,7 +7,7 @@ commit_hashes=$(git rev-list --no-merges origin/$RAMA_PRINCIPAL..origin/$RAMA_AC
 trap 'handle_error' ERR
 
 function handle_error() {
-    echo "Error encontrado. Revertiendo cambios..."
+    echo "Error encontrado. Revirtiendo cambios..."
     echo "--------------------------------------------------------"
 
     git checkout $RAMA_ACTUAL
