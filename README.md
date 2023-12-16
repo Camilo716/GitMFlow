@@ -2,7 +2,7 @@
 
 Script para automatizar el proceso de migración de ramas en un repositorio Git. Facilita la creación de una nueva rama de desarrollo basada en una rama principal
 
-> **✅Nota:** Este script no altera ninguna rama de trabajo actual, por ende, en caso se generarse cualquier tipo de error o conflicto durante la ejecución, simplemente se revertirán los cambios y nada del trabajo previo se verá afectado.
+> **✅Nota:** Este script no altera ninguna rama de trabajo actual, por ende, en caso de generarse cualquier tipo de error o conflicto durante la ejecución, simplemente se revertirán los cambios y nada del trabajo previo se verá afectado.
 
 ## El flujo que pretende automatizar es el siguiente
 
