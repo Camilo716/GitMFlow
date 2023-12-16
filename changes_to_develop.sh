@@ -8,13 +8,15 @@ trap 'handle_error' ERR
 
 function handle_error() {
     echo "Error encontrado. Revertiendo cambios..."
-    echo "_________________________________________"
+    echo "--------------------------------------------------------"
+
     git checkout $RAMA_ACTUAL
     git cherry-pick --abort
     git reset --hard
     git branch -D $RAMA_CAMBIOS
     git push origin --delete $RAMA_CAMBIOS
-    echo "_________________________________________"
+
+    echo ""--------------------------------------------------------""
     echo "Cambios revertidos"
     exit 1
 }
@@ -34,8 +36,13 @@ git checkout $RAMA_DESARROLLO
 git checkout -b $RAMA_CAMBIOS
 
 for commit_hash in "${commit_hashes[@]}"; do
-    echo $"Haciendo cherry-pick a\n: $commit_hash"  
+    echo ""--------------------------------------------------------""
+    echo $"Haciendo cherry-pick a:" 
+    echo $commit_hash  
+
     git cherry-pick $commit_hash
+
+    echo ""--------------------------------------------------------""
 done
 
 git push --set-upstream origin $RAMA_CAMBIOS
